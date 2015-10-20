@@ -1,0 +1,1516 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+% 	+---------------------------------------------+
+%	|	            Packages			   |
+%	+---------------------------------------------+
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+% \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{lastpage}
+\usepackage{geometry}
+\usepackage{sectsty}
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\usepackage[linesnumbered,noline]{algorithm2e}
+\usepackage{enumerate}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% 	+---------------------------------------------+
+%	|	          Global Styles			   |
+%	+---------------------------------------------+
+
+\geometry{letterpaper}
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Fall 2015}
+\rfoot{Page \thepage ~of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+\graphicspath{ {images/} }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+% 	+---------------------------------------------+
+%	|	       Algorithm Styles			   |
+%	+---------------------------------------------+
+
+\SetStartEndCondition{ (}{)}{)}\SetAlgoBlockMarkers{}{\}}%
+\SetKwProg{Fn}{}{\{}{}\SetKwFunction{FRecurs}{void FnRecursive}%
+\SetKwFor{For}{for}{\{}{}%
+\SetKwIF{If}{ElseIf}{Else}{if}{\{}{else if}{else\{}{}%
+\SetKwFor{While}{while}{\{}{}%
+\SetKwRepeat{Repeat}{repeat\{}{until}%
+\AlgoDisplayBlockMarkers\SetAlgoNoLine%
+
+% 	+---------------------------------------------+
+%	|	          This Assignment		   |
+%	+---------------------------------------------+
+
+\lhead{CSE 574/474 Midterm Study Guide}
+\SetKwFunction{goodchip}{chip[] goodChips}
+\title{CSE 574/474 Midterm Study Guide \vspace{-6ex}}
+\date{Fall 2015}
+% \author{Benjamin Paine}
+
+% 	+---------------------------------------------+
+%	|	          This Sub-Section		   |
+%	+---------------------------------------------+
+
+\newcommand\qqno{0}	% Zero indexed
+\setcounter{section}{\qqno}
+
+% 	+---------------------------------------------+
+%	|	          Begin Document	       	   |
+%	+---------------------------------------------+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Midterm Overview}
+
+{\bf Time and Place}
+\begin{itemize}
+\itemsep -2pt
+\item Monday, October 19$^{th}$, 2015 
+\item 6:30$_{PM}$ -- 7:50$_{PM}$, Hochstetter 114 
+\end{itemize}
+{\bf Topic and Format}
+\begin{itemize}
+\itemsep -2pt
+\item Topics: Probability, Linear Regression, Linear Classification, Neural Network
+\item Closed Book, closed notes. No calculators.
+\item The exam is worth 20\% of the final grade.
+\end{itemize}
+{\bf Textbook Sections}
+\begin{itemize}
+\itemsep -2pt
+\item Ch.1, 1.1 and 1.2
+\item Ch.2, 2.1, 2.3.1 -- 2.3.6 and 2.4.2
+\item Ch.3, 3.1, 3.2 and 3.3
+\item Ch.4, 4.1.1 -- 4.1.3, 4.1.7, 4.2.1 -- 4.2.3 and 4.3.1 -- 4.3.2
+\item Ch.5, 5.1, 5.2, and 5.3.1 -- 5.3.2
+\end{itemize}
+{\bf Specific Topics}
+\begin{itemize} 
+\itemsep -2pt
+\item {\bf Probability Theory}
+\begin{itemize}
+\itemsep -2pt
+\item Be able to compute conditional, marginal, and joint probability.
+\item Be able to compute mean, variance, covariance and entropy.
+\item Understand Bayes' theorem, include Sum Rule and Product Rule.
+\end{itemize}
+\item {\bf Probability Densities}
+\begin{itemize}
+\itemsep -2pt
+\item At least know the density functions of Bernoulli and Gaussian distributions.
+\item Know the definition of {\em conjugate prior}, be able to identify whether a pair of likelihood distributions and prior distributions has the property of conjugacy for Bayesian Analysis
+\end{itemize}
+\item {\bf ML, MAP Estimation}
+\begin{itemize}
+\itemsep -2pt
+\item Know the gradient descent solution for parameter estimations.
+\item Be able to write down likelihood/prior/posterior function for given data and assumption of density distribution.
+\item Be able to derive maximum likelihood estimations (ML) and maximum {\em a posterior} estimation (MAP) of parameters.
+\end{itemize}
+\item {\bf Linear Models for Linear Regression}
+\begin{itemize}
+\itemsep -2pt
+\item Know error function, basis function and design matrix.
+\item Understand how regularization works.
+\item Model complexity vs. performance.
+\item Know what over-fitting is, and possible ways to overcome it.
+\item Know the equivalence of the least-square method and maximum likelihood estimation under Gaussian noised model.
+\item {\em Bayesian Method}: At least know the advantages of the Bayesian method over Point Estimation methods (ML, MAP).
+\end{itemize}
+\item {\bf Linear Models for Classification}
+\begin{itemize}
+\itemsep -2pt
+\item Understand least square method and know under what circumstances it could fail.
+\item Know what generative models and discriminative models are, and the difference between them.
+\item Know what the perceptron algorithm is and how to do the simple calculation.
+\item {\em Logistic Regression}: Be able to write down the error function, and learning rule of updating weights in gradient descent manner.
+\end{itemize}
+\item {\bf Neural Networks}
+\begin{itemize}
+\itemsep -2pt
+\item Feed-forward Network Functions, Network Training, and error backpropagation.
+\end{itemize}
+\end{itemize}
+
+\section{Notes on Covered Topics}
+
+\subsection{Notations and Errata}
+
+A few things are important, that don't fall into other sections.\\
+~\\
+A {\bf Probability Distribution Function} has an ambiguous definition. It can refer to:
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Discrete Case:} Probability Mass Function (PMF)
+\item {\bf Continuous Case:} Probability Density Function (PDF)
+\item {\bf Both Cases:} Cumulative Distribution Function (CDF)
+\end{itemize}
+In this guide and throughout the class, {\bf PDF} refers to either the PDF or the PMF, whereas CDF is always explicitly stated.\\
+~\\
+The CDF and the PDF are intimately related. It is known:
+\begin{gather}
+PDF(x) = \frac{\partial}{\partial X} CDF(x) \\
+CDF(x) = \int_{- \infty}^{x} PDF_x(t) dt
+\end{gather}
+~\\
+The Greek letter Phi means three different things.
+\begin{flalign}
+\phi (x) & = \frac{e^{-\frac{1}{2}x^2}}{\sqrt{2 \pi}} = \mathcal{N}(0,1) \\
+\Phi(x) & = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x} e^{-\frac{t^2}{2}}dt  \\
+\varphi(x) &= E[e^{itX}] \text{ where } t \in \mathbb{R} \text{ is the argument }
+\end{flalign}
+{\bf Likelihood} and {\bf Probability} are closely related, but not the same. The likelihood of a set of parameter values $\theta$ is equal to the probability of those observed outcomes given those parameters values, i.e.,
+\begin{gather}
+\mathcal{L}(\theta|x) = p(x|\theta) \\
+\mathcal{L}(\theta|x) = p_\theta(x) = P_\theta(X=x) = P(X=x;\theta) \text{ in a discrete PDF} \\
+\mathcal{L}(\theta|x) = f_\theta(x) \text{ in a continuous PDF}
+\end{gather}
+$w^T$ represents a column vector of coefficients $w$. A simple way to remember it is:
+\begin{equation}
+y(x,w) = \sum_{j=0}^{M-1} w_j\phi_j(x) = w^T\phi(x)
+\end{equation}
+~\\
+The {\bf sigmoid} function maps real $a \epsilon (-\infty,\infty)$ to a finite $(0,1)$ interval, and is defined as:
+\begin{equation}
+\sigma(a) = \frac{1}{1 + e^{-a}}
+\end{equation}
+
+\subsection{Probability Theory}
+
+
+\subsubsection{\ldots be able to compute conditional, marginal, and joint probability.}
+
+{\bf Conditional Probability} is the probability of an event ($A$), given that another event ($B$) has occurred. Written as $p(A|B)$, and the {\em Kolmogorov definition} is:
+\begin{equation}
+p(A|B) = \frac{p(A \cap B)}{p(B)}
+\end{equation}
+If $A$ and $B$ are independent, then the probability of each event happening is not dependent on the other. In other words, $p(A|B) = p(A)$.\\
+~\\
+{\bf Marginal Probability} is closely related to {\bf Joint Probability}. If we know the joint distribution of two events $A$ and $B$, the {\em marginal probability} of an event $A$ is the probability that event $A$ happens when event $B$ is not known. The {\em joint probability} is the probability that {\bf both} events occur.\\
+~\\
+As an example of marginal, joint, and conditional, assume that we can map out the possibility of a pedestrian being hit by a car at an intersection based upon the status of the stop light. Take $H = \{0,1\}$, with $0$ being {\em not hit}, and $1$ being {\em hit}, and take $L = \{R,Y,G\}$ as the color of the stop light. An example of a conditional probability table would be:
+\begin{center}
+\begin{tabular}{| c | c | c | c |}
+\hline
+\multicolumn{4}{| c |}{$P(H|L)$} \\
+\hline
+& L=R & L=Y & L=G \\
+\hline
+H=0 & 0.99 & 0.9 & 0.2 \\
+\hline
+H=1 & 0.01 & 0.1 & 0.8 \\
+\hline
+\end{tabular}
+\end{center}
+If we know $p(L=l)$, then we can map the {\em joint} probability. If $p(L=R) = 0.2, p(L=Y) = 0.1, p(L=G) = 0.7$:
+\begin{center}
+\begin{tabular}{| c | c | c | c | c }
+\cline{1-4} 
+\multicolumn{4}{| c |}{Joint Distribution: $p(H,L)$} & \\
+\hline
+& L=Red & L=Yellow & L=Green & \multicolumn{1}{c |}{Marginal Probability $p(H)$} \\
+\hline
+H=0 & 0.198 & 0.09 & 0.14 & \multicolumn{1}{c |}{0.427} \\
+\hline
+H=1 & 0.002 & 0.01 & 0.56 & \multicolumn{1}{c |}{0.572} \\
+\hline
+Total & 0.2 & 0.1 & 0.7 & \multicolumn{1}{c |}{1} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{\ldots be able to compute mean, variance, covariance, and entropy.}
+
+{\bf Mean} is denoted as $\mu$. In the {\em absolute} sense, as in "the average value of a dice throw", we would calculate it as:
+\begin{equation}
+\mu = \frac{1}{n} \sum_{i=1}^{n} x_i
+\end{equation}
+Where we have $n$ observations, and $x_i$ is the $i^{th}$ observation. In the probability sense, we talk about {\bf Expected Value}. To calculate this, we multiply an observation $x_i$ by its associated probability $p_i = p(X=x_i)$, and get:
+\begin{equation}
+E[x] = \sum_{i=1}^{n} x_ip_i
+\end{equation}
+If we have a {\em continuous random variable}, with a probability distribution of $f(x)$, then it can be computed as:
+\begin{equation}
+E[x] = \int_{- \infty}^{\infty} x f(x) dx
+\end{equation}
+~\\
+{\bf Variance} measures how much variability there is in $f(x)$ around its mean (or {\em expected}) value $E[f(x)]$. The variance of $f(x)$ can be calculated as:
+\begin{equation}
+var[f] = E[(f(x) - E[f(x)])^2] = E[f(x)^2] - E[f(x)]^2
+\end{equation}
+~\\
+Similarly, the variance of the variable $x$ itself is:
+\begin{equation}
+var[x] = E[x^2] - E[x]^2
+\end{equation}
+~\\
+For two random variables $x$ and $y$, their {\bf covariance} is defined as:
+\begin{flalign*}
+cov[x,y] & = E_{(x,y)}[\{x-E[x]\}\{y-E[y]\}] \\
+& = E_{(x,y)}[xy] - E[x]E[y]
+\end{flalign*}
+~\\
+This expresses how $x$ and $y$ vary together. If $x$ and $y$ are independent, then their covariance vanishes --- similarly, if $\vec{x}$ and $\vec{y}$ are vectors of random variable, then their covariance is a matrix. 
+\\
+~\\
+{\bf Entropy} is a measure of the {\em unpredictability} of a probability mass function. In a high level, it is written as:
+\begin{equation}
+H(X) = E[I(X)] = E[-\text{ ln }P(X))].
+\end{equation}
+$I(X)$ is the {\em information content} of $X$, which is the negative log of the probability mass function $p(X)$. In the event of $X$ being a discrete random variable, we can use the definition of the expected value operator and get:
+\begin{equation}
+H(X) = \sum_{i=0}^{n} P(x_i)I(x_i) = - \sum_{i=0}^{n} P(x_i) log_{_b}P(x_i)
+\end{equation}
+Where $b$ is the base of the logarithm, generally $e$. If $p(X)$ is a continuous distribution, we can again use the value of $E[x]$:
+\begin{equation}
+H(X) = \int P(x)I(x)dx = - \int P(x)log_{_b}P(x)dx
+\end{equation}
+
+\subsubsection{\ldots understand Bayes' Theorem, including Sum Rule and Product Rule.}
+
+{\bf Bayes' Theorem} states:
+\begin{equation}
+p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)} \text{ where }p(X) = \sum_Y p(X|Y)P(Y)
+\end{equation}
+{\bf The Sum Rule of Probability Theory} states that, when considering two random variables, with $N$ trials sampling both $X$ and $Y$, then taking $n_{(i,j)}$ which represents the number of trials where $X=x_i$ and $Y=y_j$, and $N$ which represents the total trials, the joint probability is:
+\begin{equation}
+P(X=x_i,Y=y_j) = \frac{n_{(i,j)}}{N}
+\end{equation}
+Similarly, the marginal probability is:
+\begin{equation}
+p(X=x_i) = \frac{c_i}{N}, \text{ where } c_i = \sum_j n_{(i,j)} \text{ or } P(X=x_i) = \sum_{j=1}^{L} p(X=x_i,Y=y_j)
+\end{equation}
+Put into English, given a joint probability of two variables $X$ and $Y$, the probability that $X=x_i$ is the sum of all probabilities where $X=x_i$, regardless of $Y$.
+{\bf The Product Rule} allows us to decompose joint probabilities. See two examples below:
+\begin{flalign}
+p(X=x_i,Y=y_j)  & = p(X=y_i|Y=y_j)P(Y=y_j) \\
+p(X=x_i,Y=y_j,Z=z_k) & = p(X=x_i,Y=y_j|Z=Z_k)p(Z=z_k) \\
+& = p(X=x_i|Y=y_j,Z=z_k)p(Y=y_j|Z=z_k)p(Z=z_k)
+\end{flalign}
+
+\subsection{Probability Densities}
+
+\subsubsection{\ldots at least know the density functions of Bernoulli and Gaussian distributions}
+
+The probability density function for a {\bf bernoulli distribution} is simple:
+\begin{equation}
+p(x=k|\mu) =
+\begin{cases}
+\mu & \text{ if } k = 1 \\
+1-\mu & \text{ if } k = 0
+\end{cases}
+\end{equation}
+The {\bf joint probability density function of a bernoulli distribution} is:
+\begin{equation}
+p(D|\mu) = \prod_{n=1}^{N}p(x_n|\mu) = \prod_{n=1}^{N} \mu^{x_n}(1-\mu)^{1-x_n}
+\end{equation}
+This follows directly from the definition - we are simply multiplying all of their probabilities.\\
+~\\
+The {\bf Gaussian Distribution}, or {\bf Normal Distribution}, takes the form:
+\begin{equation}
+\mathcal{N}(X|\mu,\sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}} \text{ exp } \Bigg\{ -\frac{1}{2 \sigma^2}(x-\mu)^2 \Bigg\}
+\end{equation}
+With arguments $\mu$ as the mean and $\sigma^2$ as the variance. The other parts worth noting is the {\em standard deviation} $\sqrt{\sigma^2} = \sigma$, and the precision $\beta = \frac{1}{\sigma^2}$.
+
+\subsubsection{\ldots know the definition of {\em conjugate prior}, be able to identify whether a pair of likelihood distributions and prior distributions has the property of conjugacy for Bayesian Analysis}
+
+If a posterior distribution $p(\theta|x)$ is in the same family as a prior distribution $p(\theta)$, then they are called {\bf conjugate distributions.} As an example, {\bf Gaussian} distributions are said to be self-conjugate, meaning that if we choose a prior distribution that is Gaussian, the posterior distribution will then also be Gaussian. The other distributions we need to know are:
+\begin{center}
+Multinomial $\Leftrightarrow$ Dirichlet \\
+Binomial $\Leftrightarrow$ Beta
+\end{center}
+
+\subsection{ML, MAP Estimation}
+
+\subsubsection{\ldots know the gradient descent solution for parameter estimations}
+
+We will use the following error function in describing gradient descent:
+
+\begin{equation}
+E_D(w) = \frac{1}{2} \sum_{n=1}^{N} \big\{ t_n-w^T\varphi(x_n)\big\}^2
+\end{equation}
+If we denote $E_D(w) = \sum_nE_n$, we can update the parameter vector $\vec{w}$ using:
+\begin{equation}
+w^{(\tau+1)} = w^{(\tau)} - \eta \nabla E_n
+\end{equation}
+And, substituting for the derivative, we get:
+\begin{equation}
+w^{(\tau+1)} = w^{(\tau)} + \eta(t_n - w^{(\tau)}\phi(x_n))\phi(x_n)
+\end{equation}
+Where $w$ is initialized to some starting vector $w^{(0)}$, and $\eta$ is chosen to ensure convergence. The gradient vector $\nabla$ is defined as:
+\begin{equation}
+\nabla E[\vec{w}] \equiv \Bigg[ \frac{\partial E}{\partial w_0}, \frac{\partial E}{\partial w_1}, \ldots, \frac{\partial E}{\partial w_n} \Bigg]
+\end{equation}
+The {\bf negation} of this vector specifies the direction of steepest decrease. The gradient descent rule is then:
+\begin{equation}
+\vec{w} \leftarrow \vec{w} + \Delta \vec{w} \text{ where } \Delta \vec{w} = - \eta \nabla E[\vec{w}]
+\end{equation}
+With $\eta$ as some positive constant, called the {\bf learning rate}.
+
+\subsubsection{\ldots be able to write down likelihood/prior/posterior function for given data and assumption of density distribution}
+
+To this end, we make a {\bf Bayesian Approach}. Remember:
+\begin{equation}
+posterior~\alpha~likelihood \times prior
+\end{equation}
+Which is {\bf Bayes' Rule} in words. We will first assume a  {\bf prior} density distribution as a {\bf multivariate Gaussian} for $w$, in other words,
+\begin{equation}
+p(w) = \mathcal{N}(w|m_0,S_0)
+\end{equation}
+With mean $m_0$, and covariance matrix $S_0$. For a {\bf likelihood}, we assume a noise precision parameter $\beta$, so the likelihood $p(t|w)$ with Gaussian noise has the exponential form:
+\begin{equation}
+p(t|X,w,\beta) = \mathcal{N}\big( t|y(x,w),\beta^{-1} \big) =  \prod_{n=1}^{N} \mathcal{N}\Big( t_n|w^T \phi(x_n), \beta^{-1} \Big)
+\end{equation}
+Finally, if we have {\bf prior $p(w)$} and {\bf likelihood $p(t|w)$}, we need {\bf posterior $p(w|t)$}:
+\begin{gather}
+p(w|t) = \mathcal{N}(w|m_N,S_N) \\
+m_N = S_n(S_0^{-1}m_0 + \beta \Phi^Tt) \\
+S_N^{-1} = S_0^{-1} + \beta \Phi^T \Phi
+\end{gather}
+The {\bf Maximum Posterior Weight} Vector (MAP) is $w_{MAP} = m_N$.
+
+\subsubsection{\ldots be able to derive maximum likelihood estimations (ML) and maximum {\em a posterior} estimation (MAP) of parameters}
+
+Remember that maximizing likelihood is equivalent to minimizing error. The error function:
+
+\begin{equation}
+E(w) = \frac{1}{2} \sum_{n=1}^{N} \big\{ y(x_n,w) - t_n \big\}^2 
+\end{equation}
+~\\
+The error function can take on many forms. First, $y(x_n,w)$ and $t_n$ can have their order changed - as we're measuring the {\bf distance}, and we're squaring it, it is irrelevant. $t_n$ represents the {\em target} value, in other words, a {\bf known} value, given some $x_n$. $y(x_n,w)$ is merely the PDF describing the model, so it may be abbreviated as $w \cdot f(x)$, and $w$ may be written as $w^{\ast}$, denoting the minimum error coefficient, or $w^T$, denoting a column vector of coefficients.\\
+
+~\\
+As described in later sections, we take the derivative of this function and set equal to zero, giving us:
+\begin{flalign}
+\sum_{i=1}^{k} \sum_{j=0}^{m}w_jx_i^{n+j} & = \sum_{i=1}^{k} y_ix_i^n \\
+\begin{bmatrix}
+k & \sum_{i=0}^{k} x_i & \sum_{i=0}^{k} x_i^2 & \cdots & \sum_{i=0}^{k} x_i^n \\
+\sum_{i=0}^{k} x_i & \sum_{i=0}^{k} x_i^2 & \sum_{i=0}^{k} x_i^3  & \cdots & \sum_{i=0}^{k} x_i^{n+1} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\sum_{i=0}^{k} x_i^m & \sum_{i=0}^{k} x_i^{m+1} & \sum_{i=0}^{k} x_i^{m+2} & \cdots & \sum_{i=0}^{k} x_i^{m+n}
+\end{bmatrix}
+\begin{bmatrix}
+w_0 \\
+w_1 \\
+\vdots \\
+w_m
+\end{bmatrix}
+& =
+\begin{bmatrix}
+\sum_{i=0}^{k} y_i \\
+\sum_{i=0}^{k} y_ix_i \\
+\vdots \\
+\sum_{i=0}^{k} y_ix_i^m
+\end{bmatrix}
+\end{flalign}
+~\\
+Or, in its {\bf Closed Form}:
+\begin{equation}
+w^{\ast} = (X^TX)^{-1}X^Ty
+\end{equation}
+~\\
+If we're using a set of $N \times D$ data, a nice and easy way to write the error function could be:
+\begin{equation}
+E_D(w) = \frac{1}{2} \sum_{n=1}^{N} \big\{ t_n - w^T \phi(x_n)\big\}^2
+\end{equation}
+Where $\phi(x)$ represents the Gaussian density function. Remember that the above estimates are using {\bf values} given to us, not {\bf probabilities}. The relationship between the two is shown below:
+\begin{flalign}
+p(t|x,w,\beta) & = \prod_{n=1}^{N} \mathcal{N}\Big(t_n|y(x_n,w),\beta^{-1}\Big) = \prod_{n=1}^{N} \Big( \frac{\beta}{2 \pi} \Big) ^{\frac{1}{2}}~exp~\Bigg\{\frac{-\beta \big(t_n-w^T\phi(x_n)\big)^2}{2}\Bigg\} \\
+\text{ln }p(t|x,w,\beta) & = \frac{N}{2}\text{ ln }\beta - \frac{N}{2} \text{ ln}(2\pi) - \frac{\beta}{2} \sum_{n=1}^{N} \big\{t_n-w^T\phi(x_n)\big\}^2 \\
+w_{_{ML}} & = (\Phi^T\Phi)^{-1}\Phi^Tt_n \\
+\mu_{_{ML}} & = \frac{1}{N} \sum_{n=1}^{N} x_n \text{ in a Gaussian PDF} \\
+\Sigma_{_{ML}} & = \frac{1}{N} \sum_{n=1}^{N} \big( x_n - \mu_{_{ML}} \big)\big(x_n - \mu_{_{ML}}\big)^T
+\end{flalign}
+~\\
+Remember that $\Phi$ is the CDF equivalent of $\phi$, that is, $\Phi = \int \phi$.
+
+\subsection{Linear Models for Linear Regression}
+
+\subsubsection{\ldots know error function, basis function and design matrix.}
+
+See previous page.
+
+\subsubsection{\ldots understand how regularization works.}
+
+The goal in regularization is to minimize:
+\begin{equation}
+E(w) = E_d(w) + \lambda E_w(w) \text{ where } \lambda \text{ is the regularization coefficient}
+\end{equation}
+A simple form of a regularizer is:
+\begin{equation}
+E_W(w) = \frac{1}{2}w^Tw
+\end{equation}
+So the total error function becomes:
+\begin{equation}
+E(w) = \sum_{n=1}^{N} \Big\{ t_n - w^T\phi(x_n) \Big\}^2 + \frac{\lambda}{2}w^Tw
+\end{equation}
+This is also called the {\bf quadratic regularizer}. 
+
+\subsubsection{\ldots model complexity vs. performance}
+
+In polynomial curve fitting, an optimal order of polynomial gives the best generalization. The number of free parameters in the model, and therefore model complexity, is controlled by the order of the polynomial. If using regularized least squares, $I$ also controls model complexity.
+
+\subsection{Linear Models for Classification}
+
+\subsubsection{\ldots understand least square method and know under what conditions it could fail}
+
+When working with classes, we assign input vector $x$ to one of $K$ classes, denoted by $C_k$. The two-class linear discriminant function is:
+\begin{equation}
+y(x) = w^tx + w_0
+\end{equation}
+We assign $x$ to $C_k$ if $y_k(x) \geq y_j(x)~\forall~j \neq k$. $w$ is a weight vector, and $w_0$ is {\bf bias}. So seach $C_k, k = 1, \ldots, K$ is described by it's own linear model $y_k(x) = w^T_kx + w_{k0}$. We create an augmented vector $x=(1,x^T)$ and $w_k = (w_{k0},w_k^T)$, and simplify the notation to $y_k(x) = W^Tx$. We then use the input values as the input vector $\vec{x}$, and assign $x$ to the class for which the output is the largest. We determine $W$ by minimizing squared error. \\
+~\\
+This is severely limited, as it is {\em very} sensitive to outliers.
+
+\subsubsection{\ldots know what generative models and discriminative models are, and the difference between them}
+
+Simply put, a {\bf Generative Model} learns the {\bf joint} probability distribution $p(x,y)$, whereas a {\bf discriminative} model learns the {\bf conditional} probability distribution $p(y|x)$.
+
+\subsubsection{\ldots know what the perceptron algorithm is and how to do the simple calculation.}
+
+The {\bf perceptron algorithm} is simple: given an input vector $x$ transformed by a fixed nonlinear transformation to give feature vector $\phi(x)$, then we have:
+\begin{gather}
+y(x) = f\big(w^T\phi(x)\big) \\
+f(a) =
+\begin{cases}
++1 & \text{ if }a \geq 0 \\
+-1 & \text{ if }a < 0
+\end{cases}
+\end{gather}
+
+\newpage
+
+
+\section{Lecture Notes}
+
+\subsection{Machine Learning Overview}
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+		\includegraphics[width=0.5\textwidth]{fig1}
+	\caption{Wide variety of the same numeral}
+\end{wrapfigure}
+~\\
+{\bf Machine Learning} is a term given to programming computer to perform tasks that humans perform well, but are difficult to specify algorithmically.  An example is recognizing handwritten digits. Handcrafted rules will result in a large number of rules and exceptions, so teaching a computer to recognize them is the easier and more efficient approach.\\
+~\\
+Machine learning takes a multi-tiered approach to solving problems.
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Generalization}
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Data Collection} (Samples)
+\item {\bf Model Selection} (Probability distribution to model the process)
+\item {\bf Parameter Estimation} (Values / Distributions)
+\end{itemize}
+\item {\bf Decision}
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Inference} (Find responses to queries)
+\end{itemize}
+\end{itemize}
+~\\
+{\bf Popular Statistical Models} include:
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Generative}
+\begin{itemize}
+\itemsep -2pt
+\item Na\"ive Bayes
+\item Mixtures of multinomials
+\item Mixtures of Gaussians
+\item Hidden Markov Models (HMM)
+\item Bayesian Networks
+\item Markov Random Fields
+\end{itemize}
+\item {\bf Discriminative}
+\begin{itemize}
+\itemsep -2pt
+\item Logistic Regression
+\item SVMs
+\item Traditional neural networks
+\item Nearest neighbor
+\item Conditional Random Fields (CRF)
+\end{itemize}
+\end{itemize}
+
+\subsection{Probability Theory}
+
+{\bf Probability} is a the key concept when dealing with {\bf uncertainty}. {\bf Probability Theory} is the framework for quantification and manipulation of uncertainty. \\
+\subsubsection{An example}
+
+\begin{wrapfigure}{l}{0.3\textwidth}
+	\centering
+		\includegraphics[width=0.3\textwidth]{fig2}
+	\caption{Graphical representation of the fruit-picking problem.}
+\end{wrapfigure}
+~\\
+An example of a problem that deals with probability is picking a fruit out of a box while blind-folded. Which fruit is chosen is the random variable $F = \{o,a\}$, where $o$ represents an orange, and $a$ represents an apple. When looking at just the red box, we can say {\em the probability of picking an orange}, or $P(f=0)$, is $\frac{3}{4}$, and {\em the probability of picking an apple}, or $P(f=a)$, is $\frac{1}{4}$. \\
+~\\
+The {\bf probability distribution} is a mathematical function that describes:
+\begin{enumerate}[1. ]
+\item The possible values of a random variable, and
+\item the associated probabilities.
+\end{enumerate}
+~\\
+When dealing with Machine Learning, there are often several variables involved in a probability. In the fruit-picking example, we have two different probabilities -- which box is chosen, or random variable $B = \{r,b\}$, and which fruit is chosen, or random variable $F=\{o,a\}$. In this example, we are choosing $F$ to be dependent on $B$, that is, the probability of picking either fruit depends on which box was chosen. We say $P(B=r)$ is $\frac{4}{10} = \frac{2}{5}$, and $P(B=b)$ is $\frac{6}{10} = \frac{3}{5}$, as we are only choosing a {\em fruit} without knowledge of which box it is in. \\
+~\\
+When given this information, we can describe numerous probabilities of interest.
+\begin{itemize}
+\itemsep -2pt
+\item {\bf Marginal Probability} -- What is the probability of picking an apple? $P(F=a)$
+\item {\bf Conditional Probability} -- We picked an orange. What is the probability that we chose it from the blue box? $P(B=b|F=o)$
+\item {\bf Joint Probability} -- What is the probability of picking an orange from the blue box? $P(B=b,F=0)$
+\end{itemize}
+~\\
+\subsubsection{Sum Rule}
+
+The {\bf Sum Rule of Probability Theory} states that, when considering two random variables $X$ which can take on $M$ different values $x_1,\ldots,X_M$ and $Y$ which can take on $L$ different values $y_1,\ldots,y_L$, and $N$ trials sampling both $X$ and $Y$, then taking $n_{(i,j)}$ which represents the number of trials where $X = x_i$ and $Y = y_j$, then the joint probability is:
+\begin{equation}
+p(X=x_i,Y=y_j) = \frac{n_{(i,j)}}{N}
+\end{equation}
+Similarly, the marginal probability is:
+\begin{equation}
+p(X=x_i) = \frac{c_i}{N},\text{ where } c_i = \sum_{j} n_{(i,j)}\text{, or } P(X=x_i) = \sum_{j=1}^{L} p(X=x_i,Y=y_j)
+\end{equation}
+~\\
+\subsubsection{Product Rule}
+The {\bf Product Rule of Probability Theory}, instead, considers only those instances for which $X=x_i$. The fraction of instances where $Y=y_j$ as well is written as $P(Y=y_j|X=x_i)$ (read as {\em the probability $Y=y_j$ given that $X = x_i$}) and is called the {\bf conditional probability}. This describes the relationship between joint and conditional probability as:
+\begin{equation}
+p(Y=y_j | X=x_i) = \frac{n_{(i,j)}}{c_i}
+\end{equation}
+Combining the two equations we can see:
+\begin{equation}
+P(X=x_i,Y=y_j) = \frac{n_{(i,j)}}{N} = \frac{n_{(i,j)}}{c_i} \cdot \frac{c_i}{N} = p(Y=y_j | X=x_i) \cdot P(X=x_i)
+\end{equation}
+~\\
+\subsubsection{Bayes' Rule}
+
+From the previous rules, together with the symmetry property $P(X,Y) = P(Y,X)$, we get {\bf Bayes' Theorem}:
+\begin{equation}
+P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)} \text{ where } P(X) = \sum_Y P(X|Y)P(Y)
+\end{equation}
+~\\
+With this in hand, we can apply it to the fruit problem.
+\begin{itemize}
+\item Probability that we chose from the red box, given that we picked an orange:\\
+\begin{flalign*}
+P(B=r|F=o) & = \frac{P(F=o|B=r)P(B=r)}{P(F=o)} \\
+& = \frac{\frac{3}{4} \times \frac{4}{10}}{\frac{9}{20}} = \frac{2}{3} = 0.66
+\end{flalign*}
+\item Probability that the fruit is an orange:\\
+\begin{flalign*}
+P(F=o) & = P(F=o,B=r) + P(F=o,B=b) \\
+& = P(F=o | B=r)P(B=r) + P(F=o|B=b)P(B=b) \\
+& = \frac{6}{8} \times \frac{4}{10} + \frac{1}{4} \times \frac{6}{10} = \frac{9}{20} = 0.45
+\end{flalign*} 
+\end{itemize}
+~\\
+\subsubsection{Probability Densities}
+\begin{wrapfigure}{r}{0.3\textwidth}
+	\centering
+		\includegraphics[width=0.3\textwidth]{fig3}
+	\caption{Probability that $x$ lies in the interval $(-\infty,z)$ is $P(z) = \int_{- \infty}^{z} P(x)dx $}
+\end{wrapfigure}
+~\\
+When $x$ is a {\bf Continuous Variable}, we can then use {\bf Probability Densities}. If we say the probability that $x$ falls in the interval $(x,x+\delta_x)$ is given by $P(X)dx$ for $\delta_x \rightarrow 0$, then $P(X)$ is a {\bf Probability Density Function} of $x$. Then, the probability that $x$ lies in the interval $(a,b)$ is:
+\begin{equation}
+P(x \in (a,b)) = \int_{a}^{b} P(x)dx
+\end{equation}
+~\\
+If there are several continuous variables $x_1,\ldots,x_D$ denoted by a vector $\vec{x}$, then we can define a {\bf joint probability density} $P(x) = P(x_1,\ldots,x_D)$. It is important to note that a multivariate probability density must satisfy:
+\begin{equation}
+P(x) \leq 0 \text{ and } \int_{- \infty}^{\infty} P(x)dx = 1
+\end{equation}
+~\\
+\subsubsection{Expectation}
+
+Expectation is said to be the {\bf average value} of some function$f(x)$ under the probability distribution $P(x)$, denoted as $E[f]$. For a discrete distribution:
+\begin{equation}
+E[f] = \sum_{x} P(x)f(x)
+\end{equation}
+For a continuous distribution:
+\begin{equation}
+E[f] = \int P(x)f(x)dx
+\end{equation}
+If there are $N$ points drawn from a probability density function, then the expectation can be approximated as:
+\begin{equation}
+E[f] - \frac{1}{N} \sum_{n=1}^{N} f(x_n)
+\end{equation}
+The {\bf Conditional Expectation} with respect to a conditional distribution can be expressed as:
+\begin{equation}
+E_x[f] = \sum_{x} P(x|y)f(x)
+\end{equation}
+~\\
+\subsubsection{Variance}
+
+{\bf Variance} measures how much variability there is in $f(x)$ around its mean (or {\em expected}) value $E[f(x)]$. The variance of $f(x)$ can be calculated as:
+\begin{equation}
+var[f] = E[(f(x) - E[f(x)])^2] = E[f(x)^2] - E[f(x)]^2
+\end{equation}
+~\\
+Similarly, the variance of the variable $x$ itself is:
+\begin{equation}
+var[x] = E[x^2] - E[x]^2
+\end{equation}
+
+\subsubsection{Covariance}
+
+For two random variables $x$ and $y$, their {\bf covariance} is defined as:
+\begin{flalign*}
+cov[x,y] & = E_{(x,y)}[\{x-E[x]\}\{y-E[y]\}] \\
+& = E_{(x,y)}[xy] - E[x]E[y]
+\end{flalign*}
+~\\
+This expresses how $x$ and $y$ vary together. If $x$ and $y$ are independent, then their covariance vanishes --- similarly, if $\vec{x}$ and $\vec{y}$ are vectors of random variable, then their covariance is a matrix. 
+
+\subsubsection{Bayesian Probabilities}
+
+The {\bf classical} or {\bf frequentist} view of probabilities is that probability can be described as {\em a frequency of random, repeatable events}. The {\bf Bayesian} view, however, describes probability as a {\em quantification of uncertainty} --- a degree of belief in propositions that do not involve random variables. \\
+~\\
+The use of probability to represent uncertainty is chosen out of necessity, rather than convenience. If numerical values are used to present degrees of belief, then a simple set of axioms for manipulating degrees of belief leads to the sum and product rules of probability described earlier. Probability can be regarded as {\em an extension of Boolean logic} to situations involving uncertainty. \\
+~\\
+The {\bf Bayesian Approach} makes several qualifications to standard Probability Theory. The first distinction is that we quantify uncertainty around the choice of a parameter $w$, and uncertainty {\em before} observing data is expressed by $p(w)$. Given observed data $D = \{t_1,\ldots,t_N\}$, then uncertainty in $w$ after observing $D$ is given by Bayes' Rule as: 
+$$
+p(w|D) = \frac{p(D|w)p(w)}{p(D)}
+$$
+The quantity $p(D|w)$ can be viewed as a function of $w$, and represents {\em how probable the data set is for different parameters $w$}. This is called the {\bf likelihood function}, and is {\bf not} a probability distribution over $w$.
+
+\subsubsection{Likelihood Function}
+
+Bayes' rule, in words, could be described as:
+\begin{equation}
+posterior = \frac{likelihood \times prior}{evidence}
+\end{equation}
+~\\
+The likelihood function plays a central role in both Bayesian and frequentist paradigms. A frequentist might say that $w$ is a fixed parameter determined by an estimators, with error bars ob estimate from possible data sets $D$. A Bayesian approach might say that there is a single data set $D$, and uncertainty is expressed as a probability distribution over $w$.
+
+\subsubsection{Maximum Likelihood Approach}
+
+In a frequentist setting, $w$ is considered to be a fixed parameter, set to maximize the likelihood function $p(D|w)$. In machine learning, we describe the negative log of the likelihood function $-log(p(D|w))$ as the {\bf error function}, as maximizing likelihood is equivalent to minimizing error. \\
+~\\
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+		\begin{subfigure}[t]{0.2\textwidth}
+			\includegraphics[width=\textwidth]{fig41}
+			\caption{Bayesian Approach}
+		\end{subfigure}
+		\quad
+		\begin{subfigure}[t]{0.2\textwidth}
+			\includegraphics[width=\textwidth]{fig42}
+			\caption{Classical Approach}
+		\end{subfigure}
+	\caption{Classical vs. Bayesian}
+\end{wrapfigure}
+~\\
+In the Bayesian approach, inclusion of prior knowledge arises naturally. As an example, say we take a coin and toss it three times, with it landing on heads each time. A classical approach with no prior knowledge would assume $P(heads) = 1$, implying all future coin tosses will land heads. A Bayesian approach will lead to a less extreme conclusion. \\
+
+\subsubsection{Bayesian Approach}
+
+In choosing to approach a problem in the Bayesian fashion, it's important to note the factors that make it difficult. Marginalization over the {\em entire} parameter space is required to make predictions or compare models. However, sampling methods such as {\bf Markov Chain} and {\bf Monte Carlo} methods, as well as increased speed and memory of computers, help to offset these difficulties. As an alternative to sampling, deterministic approximation schemes such as {\bf Variational Bayes} and {\bf Expectation Propagation} can be used.
+
+\subsubsection{The Gaussian Distribution}
+
+\begin{wrapfigure}{l}{0.3\textwidth}
+	\centering
+		\includegraphics[width=0.3\textwidth]{fig5}
+	\caption{A Gaussian Distribution}
+\end{wrapfigure}
+
+~\\
+
+\noindent Also called a {\bf Normal Distribution}, this is a very common continuous probability distribution. For a single real-value variable $x$:
+\begin{equation}
+N(X|\mu,\sigma^2) = \frac{1}{(2 \pi \sigma^2)^{\frac{1}{2}}} e^{- \frac{1}{2\sigma^2} (x-\mu)^2}
+\end{equation}
+Where $\mu = E[x]$ represents the {\bf mean}, and $\sigma^2 = Var[x]$ the {\bf variance}. Derived from this, $\sigma = \sqrt{\sigma^2}$ is the {\bf standard deviation}, and $\beta = \frac{1}{\sigma^2}$ is the {\bf precision}.\\
+~\\
+Given $N$ observations $x_i, i=1,\ldots,n$, independent and identically distributed, the probability of seeing these observations is given by the {\bf likelihood function}:
+\begin{equation}
+p(x|\mu,\sigma^2) = \prod_{n=1}^{N} N(x_n|\mu,\sigma^2)
+\end{equation}
+Similarly, the {\bf log-likelihood function} is given by the formula:
+\begin{equation}
+{\text ln  }~p(x|\mu,\sigma^2) = - \frac{1}{2\sigma^2} \sum_{n=1}^{N} (x_n - \mu)^2 - \frac{N}{2}{\text ln }~\sigma^2 - \frac{N}{2} {\text ln }~(2 \pi)
+\end{equation}
+Where the {\bf maximum likelihood} equations are given by:
+\begin{flalign*}
+\mu_{_{ML}} & = \frac{1}{N} \sum_{n=1}^{N} x_n \\
+\sigma^2_{_{ML}} & = \frac{1}{N} \sum_{n=1}^{N} (x_n - \mu_{_{ML}})^2
+\end{flalign*}
+Maximum likelihood systematically underestimates variance. $E[\mu_{_{ML}}] = \mu$, but $E[\sigma^2_{_{ML}}] = ((N-1)/N)\sigma^2$. This is because the variance is estimated relative to the sample mean, not the {\em true} mean. This is related to the {\bf over-fitting problem.}
+
+\subsubsection{Probabilistic Curve Fitting}
+
+The goal of curve-fitting is to predict a target variable $t$ given a new value of the input variable $x$. Given $N$ input values $x=(x_1,\ldots,x_N)^T$ and corresponding targets value $t=(t_1,\ldots,t_N)^T$, we can assume that given a value of $x$, value $t$ has a Gaussian distribution with a mean equal to $y(x,w)$ of the polynomial curve $p(t|x,w,\beta) = N(t|y(x,w),\beta^{-1})$, where the {\bf mean} is given by the polynomial function $y(x,w)$ and the {\bf precision} by $\beta$.\\
+~\\
+In regards to curve-fitting with maximum likelihood, we know the likelihood function is:
+\begin{equation}
+p(t|x,w,\beta) = \prod_{n=1}^{N} N(t_n | y(x_n,w), \beta^{-1})
+\end{equation}
+Similarly, the logarithm of the likelihood function is:
+\begin{equation}
+\text{ ln } p(t|x,w,\beta) = - \frac{\beta}{2} \sum_{n=1}^{N} \{ y(x_n,w)-t_n\}^2 + \frac{N}{2} \text{ ln }\beta - \frac{N}{2} \text{ ln } 2\pi
+\end{equation}
+To find the maximum likelihood solution for polynomial coefficients $w_{_{ML}}$, we first {\em maximize} with respect to $w$. We can omit the last two terms as they don't relate to $w$, and we can replace $\frac{\beta}{2}$ with $\frac{1}{2}$ for the same reason, and then minimize negative log-likelihood. This is identical to the sum-of-squares error function. \\
+~\\
+We can also use this to determine $\beta$ of a Gaussian conditional distribution. Maximizing likelihood with respect to $\beta$ gives us:
+\begin{equation}
+\frac{1}{\beta_{_ML}} = \frac{1}{N} \sum_{n=1}^{N} \{ y(x_n,w_{_{ML}}) - t_n\}^2
+\end{equation}
+Note that we first need to determine the parameter vector $\vec{w}_{_{ML}}$ governing the mean. If we know the parameters $w$ and $\beta$, predictions for new values of $x$ can be made using:
+\begin{equation}
+p(t|x,w_{_{ML}},\beta_{_{ML}}) = N(t|y(x,w_{_{ML}},\beta_{_{ML}}^{-1})
+\end{equation}
+Instead of using a point estimate, we are now giving a probability distribution over $t$.
+
+\subsubsection{Posterior Distribution}
+
+Introducing {\em a prior} distribution over polynomial coefficients $w$ gives us:
+\begin{equation}
+p(w|\alpha) = N(w|0,\alpha^{-1}I) = \left(\frac{a}{2\pi}\right)^{\frac{M+1}{2}}e^{-\frac{\alpha}{2}w^Tw}
+\end{equation}
+Where $\alpha$ is the precision of the distribution, and $M+1$ is the total number of parameters for an $M^{th}$ degree polynomial. Using {\bf Bayes' Theorem}, {\em posterior} distribution for $w$ is proportional to the product of {\em prior} distribution and the likelihood function, or:
+\begin{equation}
+p(w|x,t,\alpha,\beta) = p(t|x,w,\beta)p(w|\alpha)
+\end{equation}
+In this instance, $w$ can be determined by finding the most probably value, {\em i.e.}, maximizing the posterior distribution. This is equivalent to minimizing:
+\begin{equation}
+\frac{\beta}{2} \sum_{n=1}^{N} \big\{ y(x_n.w)-t_n\big\}^2 + \frac{\alpha}{2}w^Tw
+\end{equation}
+This is the same as the sum of squared errors function with a regularization parameter given by $\lambda = \frac{\alpha}{\beta}$.
+
+\subsubsection{Bayesian Curve Fitting}
+
+Given training data $x$ and $t$, and a new test point $x$, our goal is to predict the values of $t$, {\em i.e.}, we wish to evaluate the predictive distribution $p(t|x,x,t)$. If we apply the product and sum rules, we can see:
+\begin{flalign*}
+p(t | x,x,t) & = \int p(t,w|x,x,t) dw & \text{ by Sum Rule} \\
+& = \int p(t | x,w,x,t) p (w|x,x,t) & \text{ by Product Rule} \\
+& = \int p(t|x,w)p(w|x,t) dw & \text{ by eliminating unnecessary variables}
+\end{flalign*}
+Where $p(t|x,w) = N(t|y(x,w),\beta^{-1})$, and $p(w|x,t)$ is the posterior distribution over parameters (Gaussian).
+
+\subsection{Model Selection}
+
+In polynomial curve fitting, an optimal order of polynomial gives the best generalization. The number of free parameters in the model, and therefore model complexity, is controlled by the order of the polynomial. If using regularized least squares, $I$ also controls model complexity.
+
+\subsubsection{Validation Set to Select Model}
+
+Performance on a training set is not a good indicator of predictive performance. If there is plenty of data, some of the data can be used to train a range of models, or one given model is given a range of parameters. We can then compare this model with an independent set, called a {\bf validation set}. The one with the best predictive performance will be the model chosen to represent the probability.\\
+~\\
+If a data set is small, then some over-fitting can occur.
+
+\subsubsection{S-fold Cross Validation}
+\begin{wrapfigure}{r}{0.2\textwidth}
+	\centering
+		\includegraphics[width=0.2\textwidth]{fig6}
+	\caption{The red group is left out.}
+\end{wrapfigure}
+		
+~\\
+
+\noindent If a supply of data is limited, we can partition all available data into $S$ groups. Of these groups, $S-1$ groups are used to train and then we evaluate with the remaining group. We repeat for all $S$ choices of the validation group, and performance scores from $S$ runs are averaged.
+
+\subsubsection{Bayesian Information Criterion}
+
+The {\bf Bayesian Criterion} helps us choose a model. The {\bf Akaike Information Criterion (AIC)} chooses the model  for which the quantity ln $p(D|w_{_{ML}}-M$ is highest, where $M$ is the number of adjustable parameters. The {\bf BIC} is a variation of the quantity.
+
+\subsection{Polynomial Curve Fitting}
+
+\subsubsection{Simple Regression Problem}
+
+We are given $N$ observations of $x$, where $x = (x_1,\ldots,x_N)^T$ and $t = (t_1,\ldots,t_N)^T$. The goal is to exploit training set to predict a value of $\hat{t}$ from $x$ --- inherently this is a difficult problem, but probability theory allows us to make a prediction. \\
+~\\
+A polynomial problem is of the form:
+\begin{equation}
+y(x,w) = w_0 + w_1x + w_2x^2 + \cdots + w_Mx^M = \sum_{i=0}^{M} x_ix^i
+\end{equation}
+In this form, $M$ is considered the order of the polynomial. Note that a higher $M$ value does not always yield a better fitting curve. Coefficients $w_0,\ldots,w_M$ are denoted by the vector $\vec{w}$. This is a {\bf nonlinear} function of $x$, but a {\bf linear} function of coefficients $w$.
+
+\subsubsection{Error Function}
+
+\begin{wrapfigure}{l}{0.3\textwidth}
+	\centering
+		\includegraphics[width=0.3\textwidth]{fig7}
+	\caption{Red represents the best polynomial fit.}
+\end{wrapfigure}
+~\\
+\noindent The {\bf error function} is the sum of squares of the errors between the predictions $y(x_n,w)$ for each data point $x_n$ and target value $t_n$. The formula for this is:
+\begin{equation}
+E(w) = \frac{1}{2} \sum_{n=1}^{N} \{y(x_n,w)-t_n\}^2
+\end{equation}
+The factor of $\frac{1}{2}$ is included for later convenience. We solve for this equation by choosing the value of $w$ for which $E(w)$ is as small as possible.\\
+~\\
+It's important to note that the error function is a {\bf quadratic} in coefficients $w$, which means the derivative with respect to the coefficients will be linear in elements of $w$, thus, the error function has a closed form solution. The unique minimum is denoted as $w^{\ast}$, and the resulting polynomial is $y(x,w^{\ast})$. A solution takes the form:
+\begin{flalign*}
+\frac{\partial E(w)}{\partial w} & = \sum_{n=1}^{N} \{y(x_n,w)-t_n\}x_n^i \\
+& = \sum_{n=1}^{N} \Big\{ \sum_{j=0}^{M} w_jx_n^j - t_n\Big\} x_n^i \\
+\end{flalign*}
+After setting equal to zero \ldots
+\begin{equation}
+\sum_{n=1}^{N} \sum_{j=0}^{M}  = \sum_{n=1}^{N} t_nx_n^i 
+\end{equation}
+Since
+\begin{equation}
+y(x,w) = \sum_{j=0}^{M} w_jx^j
+\end{equation}
+
+\subsubsection{Solving Simultaneous Equations}
+
+If an equation is of the form $aw = b$, where $A$ is and $N \times (M+1)$ matrix, $\vec{w}$ is an $(M+1) \times 1$ vector, and $\vec{b}$ is an $N \times 1$ vector, then we can solve it using the matrix inversion $w = A^{-1}b$, or by {\bf Gaussian elimination}.
+\begin{equation}
+\begin{array}{ccccccccc}
+a_{11}x_1 & + & a_{12}x_2 & + & \cdots & + & a_{1n}x_n & = & b_1 \\
+a_{21}x_1 & + & a_{22}x_2 & + & \cdots & + & a_{2n}x_n & = & b_2 \\
+\vdots & & \vdots & & & & \vdots & & \vdots \\
+a_{m1}x_1 & + & a_{m2}x_2 & + & \cdots & + & a_{mn}x_n & = & b_m
+\end{array}
+=
+x_1
+\begin{bmatrix}
+a_{11} \\
+a_{12} \\
+\vdots \\
+a_{m1}
+\end{bmatrix}
++
+x_2
+\begin{bmatrix}
+a_{12} \\
+a_{22} \\
+\vdots \\
+a_{m2}
+\end{bmatrix}
++ \cdots + x_n
+\begin{bmatrix}
+a_{1n} \\
+a_{2n} \\
+\vdots \\
+a_{mn}
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+\vdots \\
+b_m
+\end{bmatrix}
+\end{equation}
+To break the equation down:
+\begin{equation}
+A =
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{12} & a_{22} & \cdots & A_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+, x = 
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{bmatrix}
+, b = 
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+\vdots \\
+b_m
+\end{bmatrix}
+\end{equation}
+Following, let's see an example using Gaussian Elimination, followed by back-substitution:
+\begin{flalign*}
+x + 3y - 2z & = 5 \\
+3x + 5y + 6z & = 7 \\
+2x + 4y + 37 & = 8
+\end{flalign*}
+$$
+\begin{bmatrix}[ccc|c]
+1 & 3 & -2 & 5 \\
+3 & 5 & 6 & 7 \\
+2 & 4 & 3 & 8
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+1 & 3 & -2 & 5 \\
+0 & -4 & 12 & -8 \\
+2 & 4 & 3 & 8
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+1 & 3 & -2 & 5 \\
+0 & -4 & 12 & -8 \\
+0 & -2 & 7 & -2
+\end{bmatrix}
+\sim \cdots \sim
+\begin{bmatrix}[ccc|c]
+1 & 0 & 0 & -15 \\
+0 & 1 & 0 & 8 \\
+0 & 0 & 1 & 2
+\end{bmatrix}
+$$
+
+\subsubsection{Generalization Performance}
+
+Let's consider a separate test set of $100$ points. Then, for each values of $M$, we evaluate:
+\begin{equation}
+E(w^{\ast}) = \frac{1}{2} \sum_{n=1}^{N} \{ y(x_n,w^{\ast})-t_n\}^2 \text{ where } y(x,w^{\ast}) = \sum_{j=0}^{M} w_j^{\ast}x^j
+\end{equation}
+To evaluate the error, we want to use the {\bf Root-Mean-Square} error:
+\begin{equation}
+E_{_{RMS}} = \sqrt{\frac{2E(w^{\ast})}{N}}
+\end{equation}
+
+Division by $N$ in the $RMS$ error allows different sizes of $N$ to be compared on equal footing, while the square root ensures $E_{_{RM}}$ is measured in the same units as $t$.\\
+~\\
+As we're developing models with higher $M$ values, the coefficient $w^{\ast}$ can change wildly. As an example:\\
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.23\linewidth}
+\includegraphics[width=\linewidth]{fig81}
+\caption{$M=0$}
+\end{subfigure}
+\begin{subfigure}[t]{0.23\linewidth}
+\includegraphics[width=\linewidth]{fig82}
+\caption{$M=1$}
+\end{subfigure}
+\begin{subfigure}[t]{0.23\linewidth}
+\includegraphics[width=\linewidth]{fig83}
+\caption{$M=3$}
+\end{subfigure}
+\begin{subfigure}[t]{0.23\linewidth}
+\includegraphics[width=\linewidth]{fig84}
+\caption{$M=9$}
+\end{subfigure}
+\caption{Choosing the order of $M$}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tabular}{r | r r r r}
+~ & $M=0$ & $M=1$ & $M=6$ & $M=9$ \\
+\hline
+$w^{\ast}_0$ & 0.19 & 0.82 & 0.31 & 0.35 \\
+$w^{\ast}_1$ & & -1.27 & 7.99 & 232.37 \\
+$w^{\ast}_2$ & & & -25.43 & -5321.83 \\
+$w^{\ast}_3$ & & & 17.37 & 48568.31 \\
+$w^{\ast}_4$ & & & & -231639.30 \\
+$w^{\ast}_5$ & & & & 640042.26 \\
+$w^{\ast}_6$ & & & & -1061800.52 \\
+$w^{\ast}_7$ & & & & 1042400.18 \\
+$w^{\ast}_8$ & & & & -557682.99 \\
+$w^{\ast}_9$ & & & & 125201.43
+\end{tabular}
+\caption{As $M$ increases, magnitude of coefficients increases}
+\end{figure}
+~\\
+For a given model, the problem of complexity overfitting becomes less severe as the size of the data set increases. A good rough rule would be that a data set should be at least 5 to 10 times as large as the number of parameters in the model.
+
+\subsubsection{Least Squares}
+
+If we limit the number of parameters to the size of the training set to avoid overfitting, we may be underestimating the complexity of the problem. In a real-world case with a much wider array of data, an overly simple model may be an inaccurate one. {\bf Least Squares} is a specific case of Maximum Likelihood. The formula for least squares is:
+\begin{gather}
+\tilde{E}(w) = \frac{1}{2} \sum_{n=1}^{N} \{y(x_n,w)-t_n\}^2 + \frac{\lambda}{2}~||w^2|| \\
+||w^2|| \equiv W^Tw = w_o^2 + w_1^2 + \cdots + w_M^2
+\end{gather}
+This adds a {\em penalty term} to the error function to discourage coefficients from reaching large values -- allowing a data set to be of limited size, but the model maintains necessary complexity. $\lambda$ determines the relative importance of the regularization term to the error term. This method is also called {\bf shrinkage} in statistics, or {\bf weight decay} in neural networks. \\
+~\\
+The effect of the regularizer can be profound. See {\bf Figure 10} for examples.
+
+\begin{figure}
+\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{fig91}
+	\caption{Optimal}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{fig92}
+	\caption{Large Regularizer}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{fig93}
+	\caption{No Regularizer}
+	\end{subfigure}
+	\caption{With $M=9$, the effects of $\lambda$ can be profound.}
+\end{figure}
+\begin{figure}
+\centering
+\begin{tabular}{r | r r r}
+& ln $\lambda = - \infty$ & ln $\lambda = -18$ & ln $\lambda = 0$ \\
+\hline
+$w_o^{\ast}$ & 0.35 & 0.35 & 0.13 \\
+$w_1^{\ast}$ & 232.37 & 4.74 & -0.05 \\
+$w_2^{\ast}$ &  -5321.83 & -0.77 & -0.06 \\
+$w_3^{\ast}$ & 48568.31 & -31.97 & -0.05 \\
+$w_4^{\ast}$ & -231639.30 & -3.89 & -0.03 \\
+$w_5^{\ast}$ & 640042.26 & 55.28 & -0.02 \\
+$w_6^{\ast}$ & -1061800.52 & 41.32 & -0.01 \\
+$w_7^{\ast}$ & 1042400.18 & -45.95 & -0.00 \\
+$w_8^{\ast}$ & -557682.99 & -91.53 & 0.00 \\
+$w_9^{\ast}$ & 125201.43 & 72.68 & 0.01
+\end{tabular}
+\caption{With ln $\lambda = - \infty$, there is no regularizer. With ln $\lambda = 0,\text{ then }\lambda = 1$, which is a large regularizer.}
+\end{figure}
+~\\
+In these instances, $\lambda$ controls the complexity of the model --- hence it is an analogous choice to $M$. A suggested approach is to use a training set to determine coefficients for $\vec{w}$ using different values of $M$ or $\lambda$, then use a validation set to optimize model complexity.
+
+\subsection{Discrete Probability Distributions}
+
+\subsubsection{Bernoulli Distribution}
+
+A {\bf Bernoulli Distribution} expresses a single binary-valued random variable, {\em e.g.}, $x \in \{0,1\}$. The probability of $x = 1$ is denoted by a parameter $\mu$, i.e.
+\begin{flalign}
+p(x=1|\mu) = & \mu \\
+p(x=0 | \mu) = & 1 - \mu
+\end{flalign}
+~\\
+The probability distribution has the form $Bern(x|\mu) = \mu^x(1-\mu)^{1-x}$. The mean is shown to be $E[x] = \mu$, and the variance as $Var[x] = \mu(1-\mu)$. The likelihood of $n$ observations independently drawn from $p(x|\mu)$ is:
+\begin{equation}
+p(D|\mu) = \prod_{n=1}^{N} p(x_,|\mu) = \prod_{n=1}^{N} \mu^{x_n}(1-\mu)^{1-x_n}
+\end{equation}
+Similarly, the log-likelihood is:
+\begin{equation}
+\text{ln }p(D|\mu) = \sum_{n-1}^{N} \text{ ln }p(x_n|\mu) = \sum_{n=1}^{N} \{ x_n \text{ ln }\mu + (1-x_n)\text{ ln }(1-\mu)\}
+\end{equation}
+~\\
+The maximum likelihood estimator is obtained by setting the derivative of ln $p(D|\mu)$ with respect to $m$ equal to zero, and is characterized by the equation:
+\begin{equation}
+\mu_{_{ML}} = \frac{1}{N} \sum_{n=1}^{N} x_n
+\end{equation}
+~\\
+So, if the number of observations of $x=1$ is $m$, then $\mu_{_{ML}} = \frac{m}{N}$.
+
+\subsubsection{Binomial Distribution}
+
+The {\bf Binomial Distribution} is related to the Bernoulli distribution. It expresses the distribution of $m$, and is proportional to $Bern(x|\mu)$. It adds up all the ways of obtaining the observation of $x=1$, so:
+\begin{equation}
+Bin(m|N,\mu) = {n \choose m} \mu^m(1-\mu)^{N-m}
+\end{equation}
+The mean and variance are then:
+\begin{flalign}
+E[m] & = \sum_{m=0}^{N} m \cdot Bin(m|N,\mu) = N \mu \\
+Var[m] & = N\mu(1-\mu)
+\end{flalign}
+As a reminder, for binomial coefficients,
+\begin{equation}
+{N \choose m} - \frac{N!}{m!(N-m)!}
+\end{equation}
+
+\subsubsection{Beta Distribution}
+
+{\bf Beta Distributions} make use of the Gamma function.
+\begin{gather}
+Beta(\mu|a,b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-mu)^{b-1} \\
+\Gamma(x) = \int_{0}^{\infty} \mu^{x-1} e^{-\mu} d\mu
+\end{gather}
+Where $a$ and $b$ are hyperparameters that control the distribution of $\mu$. Mean and variance are:
+\begin{flalign}
+E[\mu] & = \frac{a}{a+b} \\
+var[\mu] & = \frac{ab}{(a+b)^2(a+b+1)}
+\end{flalign}
+~\\
+The Maximum Likelihood Estimate in a Bernoulli distribution is the fraction of observations with $x=1$, but is severely overfitted for small data sets. The likelihood function itself takes products of factors, in the form:
+\begin{equation}
+\mu^x(1-\mu)^{(1-x)}
+\end{equation}
+~\\
+If the prior distribution of $\mu$ is chosen to be proportional to power of $\mu$ and $1-\mu$, the posterior function will have the same functional form as the prior. This is called {\bf Conjugacy}. The Beta function has a form suitable to a prior distribution $p(\mu)$. If we want a posterior function, we can multiply the Beta function with the binomial likelihood, yielding
+\begin{equation}
+p(\mu|m,l,a,b) \alpha \mu^{m+a-1}(1-\mu)^{l+b-1} = \frac{\Gamma(m+a+l+b)}{\Gamma(m+a)\Gamma(l+b)}\mu^{m+a-1}(1-\mu)^{l+b-1}
+\end{equation}
+
+\subsection{Multinomial Variables}
+
+\subsubsection{Generalization of a Binomial}
+
+A {\bf binomial} is something like tossing a coin --- it expresses the probability of a number of successes in $N$ trials. A {\bf multinomial} is something like throwing a die --- it expressed the probability of a given frequency for each value.\\
+~\\
+The Bernoulli distribution $x$ is $0$ or $1$. If we want to generalize this to a variable that takes one of $k$ values, we can use a schema where $x$ is a {\bf k-dimensional} vector. If $x=3$, then $x = (0,0,1,0,0,0)^T$ is a possible representation with $k = 6$. Such vectors {\em must} satisfy $\sum_{i=1}^{k} x_k = 1$.\\
+~\\
+If the probability of $x_k = 1$ is denoted $\mu_k$, then the distribution of $x$ is given by the {\bf Generalized Bernoulli}:
+\begin{equation}
+p(x|\mu) = \prod_{i=1}^{k} \mu_i^{x_i} \text{ where } \mu = (\mu_1,\ldots,\mu_k)^T
+\end{equation}
+
+\subsubsection{Maximum Likelihood Estimate of Generalized Bernoulli}
+
+If we have a data set $D$ of $N$ independent observations $x_1,\ldots,x_N$, where the $n^{th}$ observation is written as $[x_{n1},\ldots,x_{nk}]$, then the likelihood function has the form:
+\begin{equation}
+p(D|\mu) = \prod_{n=1}^{N}\prod_{k=1}^{K} \mu_k^{x_{mk}} = \prod_{k=1}^{K} \mu_k^{(\sum_n x_{mn})} = \prod_{k=1}^{K} \mu_k^{m_k}
+\end{equation}
+Where $m_k = \sum_n x_{nk}$ is the number of observations of $x_k = 1$. The maximum likelihood solution is obtained by setting the derivative with respect to $\mu$, and is:
+\begin{equation}
+\mu_k^{ML} = \frac{m_k}{N}
+\end{equation}
+
+\subsubsection{Dirichlet Distribution}
+
+A {\bf Dirichlet Distribution} is a family of prior distributions for parameters $\mu_k$ of a multinomial distribution. By inspection of the multinomial, the form of the conjugate prior is:
+\begin{equation}
+p(\mu|a) \alpha \prod_{k=1}^{K} \mu_k^{a_k-1} \text{ where } 0 \leq \mu_k \leq 1 \text{ and } \sum_k \mu_k = 1
+\end{equation}
+Similarly, the normalized form of the Dirichlet Distribution is:
+\begin{equation}
+Dir(\mu|a) = \frac{\Gamma(a_0)}{\Gamma(a_1)\ldots\Gamma(a_k)}\prod_{k=1}^{K}\mu_k^{a_k-1} \text{ where } a_0 = \sum_{k=1}^{K} a_k
+\end{equation}
+
+\subsubsection{Summary of Discrete Distributions}
+
+For {\bf two-state} (binary) values, use a {\bf Bernoulli} distribution. If there are two binary variables, use the {\bf binomial}.
+\begin{gather}
+Bern(x|\mu) = \mu^x(1-\mu)^{1-x} \\
+Bin(m|N,\mu) = {N \choose m}\mu^m(1-\mu)^{N-m} \text{ where } {N \choose m} = \frac{N!}{m!(N-m)!}
+\end{gather}
+For {\bf k-states}, use the {\bf Generalized Bernoulli} distribution. If there are many variables, use the {\bf multinomial}.
+\begin{gather}
+p(x|\mu) = \prod_{k=1}^{K} \mu_k^{x_k} \text{ where } \mu = (\mu_1,\ldots,\mu_K)^T \\
+Mult(m_1,m_2,\ldots,m_K | \mu, N ) = {N \choose m_1 m_2 \ldots m_K} \prod_{k=1}^{K} \mu_k^{m_k}
+\end{gather}
+For {\bf Conjugate Priors}, if it is binomial, use the {\bf Beta} distribution, if multinomial, use {\bf Dirichlet}.
+\begin{gather}
+Beta(\mu|a,b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(a-\mu)^{b-1} \\
+Dir(\mu|a) = \frac{\Gamma(a_0)}{\Gamma(a_1)\Gamma(a_2)\cdots\Gamma(a_K)} \prod_{k=1}^{K} \mu_k^{a_k-1} \text{ where }a_0 = \prod_{k=1}^{K} a_k
+\end{gather}
+
+\subsection{Deep Dive: The Gaussian Distribution}
+
+As we've stated before, for a single real-values variable $x$, with parameters $\mu$ (mean) and $\sigma^2$ (variance):
+\begin{equation}
+\mathcal{N}(x|\mu,\sigma^2) = \frac{1}{(2\pi\sigma^2)^{\frac{1}{2}}} e^{-\frac{1}{2\sigma^2}(x-\mu)^2}
+\end{equation}
+As well, $\sigma$ is the {\em standard deviation}, $\beta = \frac{1}{\sigma^2}$ is the precision, $E[x] = \mu$ and $Var[x] = \sigma^2$. For a $D$-dimensional vector $\vec{x}$, the multivariate Gaussian is:
+\begin{equation}
+\mathcal{N}(x|\mu,\Sigma) = \frac{1}{(2\pi)^{\frac{D}{2}}} \times \frac{1}{| \Sigma |^{\frac{1}{2}}} e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}
+\end{equation}
+Where $\mu$ is a mean vector, $\Sigma$ is a $D \times D$ covariance matrix, and $|\Sigma|$ is the determinant of $\Sigma$. As well, $\Sigma^{-1}$ is sometimes referred to as the {\bf precision matrix}. \\
+~\\
+The {\bf Covariance Matrix} is a measure of the dispersion of the data. The element in position $i,j$ represents the covariance between the $i^{th}$ and $j^{th}$ variables, written as $E[(x_i-\mu_i)(y_i-\mu_j)]$.
+
+\subsubsection{Importance of the Gaussian}
+
+The Gaussian distribution arises in many contexts. For a given variable, the Gaussian maximizes entropy. If you take a set of random variable and sum them, they become increasingly Gaussian in nature. 
+
+\subsubsection{Maximum Likelihood for the Gaussian}
+
+Given a data set $X=(x_1,\ldots,x_N)^T$ where the observations $\{x_n\}$ are drawn independently, the log-likelihood functions is given by:
+\begin{equation}
+\text{ln }p(X|\mu,\Sigma) = - \frac{ND}{2} \text{ ln }(2\pi)-\frac{N}{2}\text{ ln }|\Sigma| - \frac{1}{2}\sum_{n=1}^{N} (x_n-\mu)^T\Sigma^{-1}(x_n-\mu)
+\end{equation}
+The derivative with respect to $\mu$:
+\begin{equation}
+\frac{\partial}{\partial \mu} \text{ ln } p(X|\mu,\Sigma) = \sum_{n=1}^{N} \Sigma^{-1}(x_n - \mu)
+\end{equation}
+The solution to this equation is:
+\begin{equation}
+\mu_{_{ML}} = \frac{1}{N} \sum_{n=1}^{N} x_n
+\end{equation}
+Maximization with respect to $\Sigma$ is slightly more involved. It yields:
+\begin{equation}
+\Sigma_{_{ML}} = \frac{1}{N}\sum_{n=1}^{N} (x_n - \mu_{_{ML}})(x_n - \mu_{_{ML}}^T
+\end{equation}
+
+
+
+
+\newpage
+
+
+\section{Homework Problem Sets}
+
+\subsection{Homework Set 1}
+
+\subsubsection{Independence, Marginal and Conditional Probabilities}
+Consider the joint distribution of $x$ and $y$ described in the table below.\\
+
+\begin{center}
+\begin{tabular}{c | c c}
+x/y & 0 & 1 \\
+\hline
+0 & 2/9 & 4/9 \\
+1 & 1/9 & 2/9
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item Calculate the marginal probabilities given different values of $x$ and $y$.
+\begin{enumerate}[i. ]
+\item $p(x = 0) = \sum_{n=1}^{N} p(x=0|y) = \frac{2}{9} + \frac{4}{9} = \frac{2}{3}$
+\item $p(x=1) = \sum_{n=1}^{N} p(x=1|y) = \frac{1}{9} + \frac{2}{9} = \frac{1}{3}$
+\item $p(y=0) = \sum_{n=1}^{N} p(y=0|x) = \frac{2}{9} + \frac{1}{9} = \frac{1}{3}$
+\item $p(y=1) = \sum_{n=1}^{N} p(y=1|x) = \frac{4}{9} + \frac{2}{9} = \frac{2}{3}$
+\end{enumerate}
+\item Calculate the conditional probabilities given different values of $x$ and $y$.
+\begin{enumerate}[i. ]
+\item $p(x=0|y=0) = \frac{p(x=0,y=0)}{p(y=0|x)} = \frac{2/9}{\sum_{n=1}^{N} p(y=0|x)} = \frac{2/9}{2/9 + 1/9} = \frac{2/9}{3/9} = \frac{2}{3}$
+\item $p(x=0|y=1) = \frac{p(x=0,y=1)}{p(y=1|x)} = \frac{4/9}{\sum_{n=1}^{N} p(y=1|x)} = \frac{4/9}{4/9 + 2/9} = \frac{4/9}{6/9} = \frac{2}{3}$
+\item $p(x=1|y=0) = \frac{p(x=1,y=0)}{p(y=0|x)} = \frac{1/9}{\sum_{n=1}^{N} p(y=0|x)} = \frac{1/9}{2/9 + 1/9} = \frac{1/9}{3/9} = \frac{1}{3}$
+\item $p(x=1|y=1) = \frac{p(x=1,y=1)}{p(y=1|x)} = \frac{2/9}{\sum_{n=1}^{N} p(y=1|x)} = \frac{2/9}{4/9 + 2/9} = \frac{2/9}{6/9} = \frac{1}{3}$
+\item $p(y=0|x=0) = \frac{p(y=0,x=0)}{p(x=0|y)} = \frac{2/9}{\sum_{n=1}^{N} p(x=0|y)} = \frac{2/9}{4/9 + 2/9} = \frac{2/9}{6/9} = \frac{1}{3}$
+\end{enumerate}
+\item Random variables $x$ and $y$ \underline{~~are~~}(are/aren't) independent.
+\end{enumerate}
+\subsubsection{The Gaussian Distribution and its Properties}
+For each of the questions below, choose one of the listed answers and fill in the blank.
+\begin{enumerate}[(a)]
+\item If $X \sim \mathcal{N} (x|0,1)$
+\begin{enumerate}[i. ]
+\item $p(|X|<1) = $ \underline{~~A~~}
+\item $p(|X|<2) = $ \underline{~~B~~}
+\item $p(|X|<3) = $ \underline{~~C~~}
+\end{enumerate}
+\begin{enumerate}[A) ]
+\item 0.683
+\item 0.954
+\item 0.997 \\
+{\bf Explanation:} $X \sim \mathcal{N}(x|0,1)$ means $X$ is approximately simulated by the {\bf standard normal distribution}. As a reminder, the arguments of $\mathcal{N}$ are $\mu$ and $\sigma$, for {\em mean} and {\em standard deviation}. This means that the {\em expected value} for $X$ is 0, so $p(|X| < 1)$, means, "how many values fall within $(\mu - 1)$ and $(\mu + 1)$?" As the standard deviation is $1$, this becomes, "how many values fall within $(\mu - \sigma)$ and $(\mu + \sigma)$, or "how many values fall within one standard deviation of the mean?" We know that $68\%$ of values fall within one standard deviation of the mean, $95\%$ within two, and $99.7\%$ within three, which is what is described by $A$, $B$, and $C$, respectively.
+\end{enumerate}
+\item If $X \sim \mathcal{N}(x|0,1)$, for any given $a~(0 < a < 1)$, there exists $U_a$ such that $p(X>U_a) = a$.
+\begin{enumerate}[i. ]
+\item If $a = \frac{1}{2}$, then $U_a = $  \underline{~~A~~}
+\begin{enumerate}[A. ]
+\item 0
+\item 1/4
+\item 1/2 \\
+{\bf Explanation:} If the probability that $X$ is greater than some value is $1/2$, we know that value {\em must be the mean}. Since $\mu = 0$, the answer is A.
+\end{enumerate}
+\item $p(X < U_a) = $ \underline{~~B~~}
+\begin{enumerate}[A. ]
+\item $2a$
+\item $1-a$
+\item $a$ \\
+{\bf Explanation:} If $p(X>U_a) = a$, then $p(X<U_a) = 1 - P(X>U_a) = 1 - a$.
+\end{enumerate}
+\item If we know $p(X<x) = a$, then $x = $
+\begin{enumerate}[A. ]
+\item $U_{1-a}$
+\item $U_{1-a/2}$
+\item $U_a/2$ \\
+{\bf Explanation:} This is the same reason as above.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Bayes Rule}
+
+A die is selected at random from two 20-faced dice on which the symbols 1-10 are written with non-uniform frequency as follows:
+\begin{center}
+\begin{tabular}{c c c c c c c c c c c}
+\hline
+Symbol & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+Number of faces of die $A$ & 6 & 3 & 3 & 2 & 2 & 1 & 1 & 1 & 1 & 0 \\
+Number of faces of die $B$ & 3 & 3 & 2 & 2 & 2 & 2 & 2 & 2 & 1 & 1 \\
+\hline
+\end{tabular}
+\end{center} 
+The randomly chosen die is rolled 8 times, with the following outcome:
+$$
+D = \{5,3,9,3,8,4,7,6\}
+$$
+\begin{enumerate}[(a)]
+\item Calculate the probability of getting the outcomes for each die.
+\begin{enumerate}[i. ]
+\item $p(D|A) = $ \underline{~9/6.4e10~} \\
+\begin{flalign*}
+p(D|A) & = p(5|A) \times p(3|A) \times p(9|A) \times p(3|A) \times p(8|A) \times p(4|A) \times p(7|A) \times p(6|A) \\
+p(D|A) & = \frac{2}{20} \times \frac{3}{20} \times \frac{1}{20} \times \frac{3}{20} \times \frac{1}{20} \times \frac{2}{20} \times \frac{1}{20} \times \frac{1}{20} \\
+p(D|A) &= \frac{2 \times 3 \times 3 \times 2}{20^8} = \frac{36}{25600000000} = \frac{9}{64000000000}
+\end{flalign*}
+\item $p(D|B) = $ \underline{~1/2e9~} \\
+\begin{flalign*}
+p(D|B) & = p(5|B) \times p(3|B) \times p(9|B) \times p(3|B) \times p(8|B) \times p(4|B) \times p(7|B) \times p(6|B) \\
+p(D|B) & = \frac{2}{20} \times \frac{2}{20} \times \frac{1}{20} \times \frac{2}{20} \times \frac{2}{20} \times \frac{2}{20} \times \frac{2}{20} \times \frac{2}{20} \\
+p(D|B) &= \frac{2^7}{20^8} = \frac{1}{200000000}
+\end{flalign*}
+\end{enumerate}
+\item Given the outcome, calculate the probability that the die rolled was die $A$. 
+\begin{flalign*}
+P(A|D) & = \frac{P(D|A)P(A)}{P(D)} \\
+P(A|D) & = \frac{P(D|A)P(A)}{P(D|A)P(A) + P(D|B)P(B)} \\
+P(A|D) &= \frac{\frac{36}{20^8} \times \frac{1}{2}}{\frac{36}{20^8} \times \frac{1}{2} + \frac{2^7}{20^8} \times \frac{1}{2}} \\
+P(A|D) &= \frac{18}{20^8} \times \frac{1}{\frac{18}{20^8} + \frac{64}{20^8}} \\
+P(A|D) &= \frac{18}{20^8} \times \frac{20^8}{82} \\
+P(A|D) &= \frac{18}{82} = \frac{9}{41}
+\end{flalign*}
+\end{enumerate}
+
+\subsection{Homework Set 2}
+
+\subsubsection{Polynomial Curve Fitting}
+
+You are given a table with the data shown below.
+
+\begin{center}
+\begin{tabular}{c c c}
+\hline
+$k$ & $x_k$ & $y_k$ \\
+\hline
+1 & 1 & 4 \\
+2 & 2 & 4.5 \\
+3 & 3 & 6 \\
+4 & 4 & 8 \\
+5 & 5 & 8.5 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item Fit the points using the function below. {\em (i.e., minimize E)}
+$$
+E = \frac{1}{2} \sum_{i=0}^{k} ( \hat{y}_k (w;x) - y_k)^2)
+$$
+\begin{enumerate}[i. ]
+\item If we use the form of the linear function $\hat{y}(w;x) = w_0 + w_1x$ then the fitting function is $\hat{y}(x) = $\underline{~$\frac{5}{4}x + \frac{49}{20}$~} \\
+~\\
+{\bf Explanation: } If we are using the form of $w_0 + w_1x$, we are really using the familiar $y = ax + b$ linear formula. We know that:
+$$
+y(x,w) = \sum_{j=0}^{M} w_jx^j
+$$
+So,
+\begin{flalign*}
+E & = \frac{1}{2} \sum_{i=1}^{k} ( \hat{y}_k (w;x) - y_k)^2) \\
+& = \frac{1}{2} \sum_{i=1}^{k} \big\{ \sum_{j=0}^{1} w_j x_i^j - y_i\big\}^2
+\end{flalign*}
+If we take the derivative:
+$$
+\frac{\partial E(w)}{\partial w} = \sum_{i=1}^{k} \big\{ \sum_{j=0}^{1} w_jx_j^i - y_k\big\}x_i^n \\
+$$
+And set it equal to zero:
+\begin{flalign*}
+\sum_{i=1}^{k} \sum_{j=0}^{1} w_jx_i^{n+j} & =  \sum_{i=1}^{k}y_ix_i^n \\
+\sum_{i=1}^{k} w_0x_i + w_1x_i^2 & = \sum_{i=1}^{k} y_ix_i \\
+\begin{bmatrix}
+k & \sum_{i=0}^{k} x_i \\
+\sum_{i=0}^{k} x_i & \sum_{i=0}^{k} x_i^2
+\end{bmatrix}
+\begin{bmatrix}
+w_0 \\
+w_1
+\end{bmatrix}
+& = 
+\begin{bmatrix}
+\sum_{i=0}^{k} y_i \\
+\sum_{i=0}^{k} x_i y_i 
+\end{bmatrix} \\
+\begin{bmatrix}
+5 & 15 \\
+15 & 55
+\end{bmatrix}
+\begin{bmatrix}
+w_0 \\
+w_1
+\end{bmatrix}
+& =
+\begin{bmatrix}
+31 \\
+105.5
+\end{bmatrix}
+\end{flalign*}
+After row reduction:
+$$
+\begin{bmatrix}[c c | c]
+1 & 0 & 2.45 \\
+0 & 1 & 1.25
+\end{bmatrix}
+$$
+\item If we use the form $\hat{y}(w;x) = w_0 + w_1x + w_2x^2$, then the fitting function is $\hat{y}(x) = $ \underline{~$\frac{1}{28}x^2+\frac{29}{28}x+\frac{27}{10}$~}
+\begin{flalign*}
+\begin{bmatrix}
+k & \sum_{i=0}^{k} x_i & \sum_{i=0}^{k} x_i^2 \\
+\sum_{i=0}^{k} x_i & \sum_{i=0}^{k} x_i^2 & \sum_{i=0}^{k} x_i^3 \\
+\sum_{i=0}^{k} x_i^2 & \sum_{i=0}^{k} x_i^3 & \sum_{i=0}^{k} x_i^4 
+\end{bmatrix}
+\begin{bmatrix}
+w_0 \\
+w_1 \\
+w_2
+\end{bmatrix}
+& = 
+\begin{bmatrix}
+\sum_{i=0}^{k} y_i \\
+\sum_{i=0}^{k} x_iy_i \\
+\sum_{i=0}^{k} x_i^2y_i \\
+\end{bmatrix}
+\\
+\begin{bmatrix}
+5 & 15 & 55 \\
+15 & 55 & 225 \\
+55 & 225 & 979
+\end{bmatrix}
+\begin{bmatrix}
+w_0 \\
+w_1 \\
+w_2
+\end{bmatrix}
+& =
+\begin{bmatrix}
+31 \\
+105.5 \\
+416.5
+\end{bmatrix}
+\end{flalign*}
+After row reduction,
+$$
+\begin{bmatrix}[c c c | c]
+1 & 0 & 0 & 2.7 \\
+0 & 1 & 0 & 1.03571 \\
+0 & 0 & 1 & 0.0357143
+\end{bmatrix}
+$$
+\end{enumerate}
+\item If we are trying to fit the points using a polynomial of degree $M$ of the form $\hat{y}(w;x) = w_0 + w_1x^2 + \cdots + w_Mx^M$, the error function takes the form $E=\frac{1}{2}\sum_{i=0}^{k} (\hat{y}_k(w;k) - y_k)^2)$. Derive a closed form solution for the parameters $w$ defined to be $[w_0,w_1,\ldots,w_M]^T$. {\em Hint: represent your answer in Matrix form. Use $X = (x_i^j)_{n \times m}$ and $y=[y_0,\ldots,y_n]^T$ to express your answer.} $w = $ \underline{~$(X^TX)^{-1}X^Ty$~} \\
+~\\
+{\bf Explanation: } In our previous answers, we opted for using Gaussian Eliminations to find the answers, however, another option would be to make one side of the equation solely the $\vec{w}$ vector, and calculate the opposite as a multiplication of $A^{-1}$ and $y$. What is important to remember is that we took the derivative of the original function in order for our solution to be {\em linear} in terms of $\vec{w}$. This means we removed a factor of $X$, which, if we are not taking the derivative, needs to be put back into the function. Thus $X^T$ represents a column vector of $x$, and in putting this back in brings us $X$, a n $N \times M$ matrix, inverted, multiplied by $y$, both with a column vector $X^T$ returned.
+\item We can modify the error function by introducing a regularization factor, {\em i.e.}, $E = \frac{1}{2} \sum_{i=1}^{k} (\hat{y}_k(w;x)-y_k)^2) + \frac{1}{2}|W|^2$. Fit the data above using the function and the information below:
+\begin{enumerate}[i. ]
+\item If we use the linear form of the function, $\hat{y}(w;x) = w_0 + w_1x$, then the fitting function is $\hat{y}(x) = $ \underline{~$\frac{307}{222} + \frac{56}{37}x$~}
+\end{enumerate}
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{bishop}
+Chrstopher M. Bishop,
+{\em Pattern Recognition and Machine Learning}.
+Springer Science+Business Media, LLC,
+2006
+\bibitem{srihari}
+Sargur N. Srihari,
+{\em CSE474/574 Machine Learning Class Notes}.
+University at Buffalo,
+Fall 2015.
+\end{thebibliography}
+\end{document}
